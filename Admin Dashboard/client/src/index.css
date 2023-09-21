@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.end {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.grid-200 {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+mb-1 {
+  margin-bottom: 1rem;
+}
+
+.p-2 {
+  padding: 4px 10px;
+}
+
+.rounded-md {
+  border-radius: 8px;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 2rem;
+}
+.login-form {
+  max-width: 300px;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+
+.h {
+  height: 300px !important;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.active {
+  background: #4169e1;
+  color: white;
+}
+
+.hover:hover {
+  background: #4169e1;
+  color: white;
+}

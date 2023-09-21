@@ -1,0 +1,20 @@
+.home-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  grid-column-gap: 40px;
+  grid-row-gap: 20px;
+}
+
+.home-container div:nth-child(1) {
+  grid-column: span 3;
+}
+.home-container div:nth-child(2) {
+  grid-column: span 1;
+}
+.home-container div:nth-child(3) {
+  grid-column: span 2;
+}
+.home-container div:nth-child(4) {
+  grid-column: span 2;
+}
