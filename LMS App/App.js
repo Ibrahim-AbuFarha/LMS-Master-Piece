@@ -1,7 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import AppNavigation from "./navigation/appNavigation";
-
+import { StatusBar } from "react-native";
+import { ClassRoomProvider } from "./store/ClassRoomsContext";
+import { UserProvider } from "./store/authContext";
 export default function App() {
-  return <AppNavigation />;
+  return (
+    <UserProvider>
+      <ClassRoomProvider>
+        <AppNavigation />
+      </ClassRoomProvider>
+    </UserProvider>
+  );
 }

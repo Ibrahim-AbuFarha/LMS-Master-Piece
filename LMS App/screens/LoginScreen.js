@@ -2,13 +2,13 @@ import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { LMS_API } from "../api/api";
 import { useState } from "react";
+import { useContext } from "react";
+import UserContext from "../store/authContext";
 export default function LoginScreen() {
+  const { signIn } = useContext(UserContext);
   const navigation = useNavigation();
   const [student, setStudent] = useState({
     email: "",
@@ -22,15 +22,9 @@ export default function LoginScreen() {
   };
   const handleSignIn = async () => {
     try {
-      const { data } = await axios.post(
-        "http://192.168.1.17:8000/api/v1/students/signInStudent",
-        student
-      );
+      const { data } = await LMS_API.post("/students/signInStudent", student);
       console.log("LOGINdATa", data.student);
-      await AsyncStorage.setItem("student", JSON.stringify(data.student));
-
-      const studentData = await AsyncStorage.getItem("student");
-      console.log("first", studentData);
+      signIn(data.student);
       if (data) {
         navigation.navigate("HomeScreen");
       }

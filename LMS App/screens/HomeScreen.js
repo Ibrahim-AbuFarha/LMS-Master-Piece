@@ -1,9 +1,11 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import ClassRoomContext from "../store/ClassRoomsContext";
+import UserContext from "../store/authContext";
+import { useContext } from "react";
 
 const subjects = {
   math: require("../assets/images/home/Math.png"),
@@ -18,24 +20,11 @@ const subjects = {
 };
 
 export default function HomeScreen() {
-  const [classRooms, SetClassRooms] = useState([]);
-  const [userName, setUserName] = useState("");
-  const navigation = useNavigation();
-  const getClassRooms = async () => {
-    try {
-      const user = await AsyncStorage.getItem("student");
-      const newUser = JSON.parse(user);
-      setUserName(newUser.fullName);
+  const { getClassRooms, classRooms } = useContext(ClassRoomContext);
+  const { user } = useContext(UserContext);
 
-      const { data } = await axios.get(
-        `http://192.168.1.17:8000/api/v1/students/${newUser._id}`
-      );
-      console.log("data=", data);
-      SetClassRooms(data.data.student.classRooms);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const navigation = useNavigation();
+
   console.log("classRooms====", classRooms);
   useEffect(() => {
     getClassRooms();
@@ -60,11 +49,13 @@ export default function HomeScreen() {
     ));
   };
 
+  if (!classRooms[0]) return;
+  console.log("userHome", user);
   return (
     <SafeAreaView className="pt-7">
       <View className="flex flex-row justify-between px-4">
         <View>
-          <Text className="text-4xl">Hi, {userName}</Text>
+          <Text className="text-4xl">Hi, {user.fullName}</Text>
           <Text className="text-gray-400 text-xl mt-3">
             Here is your activity today!
           </Text>

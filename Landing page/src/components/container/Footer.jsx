@@ -13,7 +13,7 @@ const Footer = () => {
       initial={{ height: 0 }}
       whileInView={{ height: "auto" }}
       transition={{ duration: 1 }}
-      className="bg-Teal p-10"
+      className="bg-[#52B6DF] p-10"
     >
       <div className="grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 place-items-start gap-8 text-white">
         <div>
@@ -60,8 +60,8 @@ const Footer = () => {
         </div>
         <div>
           <div className="font-bold mb-6">Follow us</div>
-          <div className="text-sm mb-4">skillexlearning@gmail.com</div>
-          <div className="text-sm">+959883271929</div>
+          <div className="text-sm mb-4">EduZ@gmail.com</div>
+          <div className="text-sm">+962772574609</div>
           <div className="flex gap-4 mt-4">
             <a href="" className="hover:scale-110 text-xl">
               <BsFacebook />

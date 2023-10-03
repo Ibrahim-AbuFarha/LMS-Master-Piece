@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Layout, Menu, Dropdown, Avatar } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useNavigate, Link } from 'react-router-dom';
-import AuthContext from '../../store/authContext';
+import React, { useContext } from "react";
+import { Layout, Menu, Dropdown, Avatar } from "antd";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { useNavigate, Link } from "react-router-dom";
+import AuthContext from "../../store/authContext";
 
 const { Header } = Layout;
 
@@ -19,7 +19,7 @@ const AppHeader = () => {
   // Handle logout
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   const menu = (
@@ -37,44 +37,40 @@ const AppHeader = () => {
   const items = [
     {
       label: <Link to="/profile">Profile</Link>,
-      key: '0',
+      key: "0",
     },
     {
       label: <div onClick={handleLogout}>Logout</div>,
-      key: '1',
+      key: "1",
     },
   ];
 
   return (
     <Header
       style={{
-        background: '#fff',
-        padding: '0',
-        display: 'flex',
-        justifyContent: 'flex-end',
+        background: "#fff",
+        padding: "0",
+        display: "flex",
+        justifyContent: "flex-end",
       }}
     >
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginRight: '50px',
-          cursor: 'pointer',
+          display: "flex",
+          alignItems: "center",
+          marginRight: "50px",
+          cursor: "pointer",
         }}
       >
         <Dropdown
           menu={{
             items,
           }}
-          trigger={['click']}
+          trigger={["click"]}
         >
-          <span style={{ display: 'flex', alignItems: 'center' }}>
-            <Avatar
-              size={32}
-              icon={<UserOutlined />}
-              src={user.profilePicture}
-            />
-            <span style={{ marginLeft: '8px' }}>{user.fullName}</span>
+          <span style={{ display: "flex", alignItems: "center" }}>
+            <Avatar size={32} icon={<UserOutlined />} src={user.img} />
+            <span style={{ marginLeft: "8px" }}>{user.fullName}</span>
           </span>
         </Dropdown>
       </div>

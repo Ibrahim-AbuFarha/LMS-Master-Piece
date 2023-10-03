@@ -23,7 +23,7 @@ const Contact = () => {
             placeholder="Enter your email address"
             className="sm:p-3 p-2 outline-none text-sm shadow-md sm:w-72 w-60"
           />
-          <button className="text-sm text-white bg-Teal sm:p-3 p-2 shadow-md font-bold">
+          <button className="text-sm text-white bg-[#52B6DF] sm:p-3 p-2 shadow-md font-bold">
             Subscribe
           </button>
         </motion.form>

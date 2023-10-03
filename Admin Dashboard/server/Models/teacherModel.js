@@ -79,6 +79,7 @@ teacherSchema.methods.correctPassword = async function (
 ) {
   return await bcrypt.compare(candidatePassword, teacherPassword);
 };
+
 teacherSchema.methods.changePasswordAfter = function (JWTTimesStamp) {
   if (this.passwordChangedAt) {
     const changedTimeStamp = parseInt(

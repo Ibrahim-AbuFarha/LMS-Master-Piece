@@ -1,6 +1,6 @@
 import React from "react";
-import teacher1 from "../../assets/teacher1.png";
-import teacher2 from "../../assets/teacher2.png";
+import teacher2 from "../../assets/teacher1.png";
+import teacher1 from "../../assets/teacher2.png";
 import { accordions } from "../../Data";
 import Accordion from "./Accordion";
 const Teacher = () => {
@@ -9,8 +9,8 @@ const Teacher = () => {
       <div className="grid sm:grid-cols-2 place-items-center gap-8">
         <div className="pl-5">
           <div className="font-bold sm:text-[1.875rem] text-[1.5rem] mb-5">
-            Become <span className="text-Teal">An Instructor</span> <br /> of
-            Our Platform
+            Become <span className="text-[#52B6DF]">An Instructor</span> <br />{" "}
+            of Our Platform
           </div>
           <p className="text-sm leading-7 text-gray mb-5">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
@@ -18,7 +18,7 @@ const Teacher = () => {
             deserunt. Magni neque at eos dolore dignissimos fugit repudiandae?
             Aut laudantium asperiores et!
           </p>
-          <button className="py-3 px-4 bg-Teal text-white rounded-lg text-sm font-bold ">
+          <button className="py-3 px-4 bg-[#52B6DF] text-white rounded-lg text-sm font-bold ">
             Start Teaching
           </button>
         </div>
@@ -27,8 +27,8 @@ const Teacher = () => {
         </div>
         <div className="pl-5">
           <div className="font-bold sm:text-[1.875rem] text-[1.5rem] mb-5">
-            Become <span className="text-Teal">An Instructor</span> <br /> of
-            Our Platform
+            Become <span className="text-[#52B6DF]">An Instructor</span> <br />{" "}
+            of Our Platform
           </div>
           <p className="text-sm leading-7 text-gray mb-5">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
@@ -36,7 +36,7 @@ const Teacher = () => {
             deserunt. Magni neque at eos dolore dignissimos fugit repudiandae?
             Aut laudantium asperiores et!
           </p>
-          <button className="py-3 px-4 bg-Teal text-white rounded-lg text-sm font-bold ">
+          <button className="py-3 px-4 bg-[#52B6DF] text-white rounded-lg text-sm font-bold ">
             Get Started
           </button>
         </div>
@@ -45,7 +45,7 @@ const Teacher = () => {
         </div>
       </div>
       <div className="text-center my-8 font-bold sm:text-[1.875rem] text-[1.5rem]">
-        Frequently <span className="text-Teal">Asked Questions</span>
+        Frequently <span className="text-[#52B6DF]">Asked Questions</span>
       </div>
       <div className="mt-12 max-w-[700px] mx-auto">
         {accordions.map((accordion) => {

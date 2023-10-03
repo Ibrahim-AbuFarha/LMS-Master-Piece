@@ -37,12 +37,14 @@ exports.protect = async (req, res, next) => {
   next();
 };
 
-exports.restrictTo = async (...roles) => {
+exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     //roles['admin',lead-guide],role='user'
+    console.log(req.user);
     if (!roles.includes(req.user.role))
-      res.status(404).json({
+      return res.status(403).json({
         error: "you don't have permission to do this action",
       });
+    next();
   };
 };

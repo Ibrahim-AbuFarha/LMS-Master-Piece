@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { LMS_API } from '../../api/api';
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
+import { LMS_API } from "../../api/api";
 const AuthContext = createContext();
 export default AuthContext;
 
@@ -15,16 +15,16 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    LMS_API.get('/teachers/logout')
+    LMS_API.get("/teachers/logout")
       .then(() => {
-        console.log('logout');
+        console.log("logout");
         setUser(null);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    LMS_API.get('/teachers/currentTeacher')
+    LMS_API.get("/teachers/currentTeacher")
       .then(({ data }) => {
         setIsFirstMount(false);
         setUser(data.teacher);

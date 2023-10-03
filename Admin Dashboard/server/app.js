@@ -3,7 +3,9 @@ const app = express();
 app.use(express.json());
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-
+const rateLimit = require('express-rate-limit');
+const xss = require('xss-clean');
+const mongoSanitize = require('express-mongo-sanitize');
 const classRoomRouter = require('./Routes/classRoomRoutes');
 const courseRouter = require('./Routes/courseRoutes');
 const videoRouter = require('./Routes/videoRoutes');
@@ -24,6 +26,18 @@ const corsOptions = {
     'Access-Control-Allow-Credentials',
   ],
 };
+//Limit request from same Api 'preventing attacks
+//100 req per hour
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP,please try again in an hour!',
+});
+// app.use('/api', limiter);
+
+//Data sanitization against no sql query injection
+app.use(mongoSanitize()); // Looking at req.body ,req.querystring and req.params and filter out all
+//Data sanitization against xss "scripting attacks"
 
 app.use(cors(corsOptions));
 app.use(express.json());

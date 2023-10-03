@@ -1,8 +1,3 @@
-import { FiPenTool } from "react-icons/fi";
-import { FaLaptopCode } from "react-icons/fa";
-import { BsBarChartLine } from "react-icons/bs";
-import { MdOutlineScience } from "react-icons/md";
-
 import logo1 from "./assets/logo1.png";
 import logo2 from "./assets/logo2.png";
 import logo3 from "./assets/logo3.png";
@@ -33,46 +28,23 @@ export const navLinks = [
   },
 ];
 
-export const categories = [
-  {
-    id: 1,
-    icon: <FiPenTool />,
-    category: "Design",
-  },
-  {
-    id: 2,
-    icon: <FaLaptopCode />,
-    category: "Development",
-  },
-  {
-    id: 3,
-    icon: <BsBarChartLine />,
-    category: "Business",
-  },
-  {
-    id: 4,
-    icon: <MdOutlineScience />,
-    category: "Science",
-  },
-];
-
 export const logos = [logo1, logo2, logo3, logo4, logo5, logo6];
 
 export const accordions = [
   {
     id: 1,
-    title: "What is Skillex?",
+    title: "What is EduZ?",
   },
   {
     id: 2,
-    title: "What can I learn from Skillex?",
+    title: "What can I learn from EduZ?",
   },
   {
     id: 3,
-    title: "Can I teach on Skillex?",
+    title: "Can I teach on EduZ?",
   },
   {
     id: 4,
-    title: "What is included in my Skillex membership?",
+    title: "What is included in my EduZ membership?",
   },
 ];

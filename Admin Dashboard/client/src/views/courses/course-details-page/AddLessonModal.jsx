@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Button, Modal, Form, Input, Upload } from 'antd';
-import { uploadFile } from '../../../hooks/useUpload';
-import { useForm } from 'antd/es/form/Form';
+import { useState } from "react";
+import { Button, Modal, Form, Input, Upload } from "antd";
+import { uploadFile } from "../../../hooks/useUpload";
+import { useForm } from "antd/es/form/Form";
 
 const AddLessonModal = ({ onAdd, sectionId }) => {
   const [open, setOpen] = useState(false);
@@ -33,7 +33,7 @@ const AddLessonModal = ({ onAdd, sectionId }) => {
   };
 
   return (
-    <div style={{ marginBottom: '10px' }}>
+    <div style={{ marginBottom: "10px" }}>
       <Button onClick={showModal}>+ Add Lesson</Button>
 
       <Modal
@@ -47,14 +47,14 @@ const AddLessonModal = ({ onAdd, sectionId }) => {
           <Form.Item
             name="name"
             label="Lesson Name"
-            rules={[{ required: true, message: 'Please enter lesson name' }]}
+            rules={[{ required: true, message: "Please enter lesson name" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="video"
-            label="Lesson Vedio"
-            rules={[{ required: true, message: 'Please add the lesson video' }]}
+            label="Lesson Video"
+            rules={[{ required: true, message: "Please add the lesson video" }]}
           >
             <Upload
               accept="video/*"

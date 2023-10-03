@@ -11,7 +11,7 @@ const About = () => {
         <div>
           <div className="font-bold sm:text-[1.875rem] text-[1.5rem] mb-5">
             We provide the <br /> best{" "}
-            <span className="text-Teal">online courses</span>
+            <span className="text-[#52B6DF]">online courses</span>
           </div>
           <p className="text-sm text-gray leading-7 mb-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit.

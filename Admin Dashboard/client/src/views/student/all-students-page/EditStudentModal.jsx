@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Modal, Form, Input, message } from 'antd';
+import React, { useState } from "react";
+import { Button, Modal, Form, Input, message } from "antd";
 
 const EditStudentModal = ({ onEdit, record }) => {
   const [open, setOpen] = useState(false);
@@ -17,18 +17,20 @@ const EditStudentModal = ({ onEdit, record }) => {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-
+      console.log(values);
       setConfirmLoading(true);
       await onEdit(values, record.key);
+      console.log(11);
       setOpen(false);
     } catch (error) {
+      console.log(error);
       message.error(error.response.data.message);
     }
     setConfirmLoading(false);
   };
 
   return (
-    <div style={{ marginBottom: '10px' }}>
+    <div style={{ marginBottom: "10px" }}>
       <Button onClick={showModal}>Edit Student</Button>
 
       <Modal
@@ -42,7 +44,7 @@ const EditStudentModal = ({ onEdit, record }) => {
           <Form.Item
             name="name"
             label="Full Name"
-            rules={[{ required: true, message: 'Please enter Full Name' }]}
+            rules={[{ required: true, message: "Please enter Full Name" }]}
             initialValue={record.fullName}
           >
             <Input />
@@ -51,7 +53,7 @@ const EditStudentModal = ({ onEdit, record }) => {
           <Form.Item
             name="email"
             label="Email ID"
-            rules={[{ required: true, message: 'Please enter Email ID' }]}
+            rules={[{ required: true, message: "Please enter Email ID" }]}
             initialValue={record.email}
           >
             <Input />
@@ -60,7 +62,7 @@ const EditStudentModal = ({ onEdit, record }) => {
           <Form.Item
             name="address"
             label="Address"
-            rules={[{ required: true, message: 'Please enter address' }]}
+            rules={[{ required: true, message: "Please enter address" }]}
             initialValue={record.address}
           >
             <Input />
@@ -68,7 +70,7 @@ const EditStudentModal = ({ onEdit, record }) => {
           <Form.Item
             name="mobile"
             label="Mobile"
-            rules={[{ required: true, message: 'Please enter mobile' }]}
+            rules={[{ required: true, message: "Please enter mobile" }]}
             initialValue={record.mobile}
           >
             <Input />
@@ -76,7 +78,7 @@ const EditStudentModal = ({ onEdit, record }) => {
           <Form.Item
             name="grade"
             label="Grade"
-            rules={[{ required: true, message: 'Please enter Grade' }]}
+            rules={[{ required: true, message: "Please enter Grade" }]}
             initialValue={record.grade}
           >
             <Input />
@@ -85,7 +87,7 @@ const EditStudentModal = ({ onEdit, record }) => {
           <Form.Item
             name="age"
             label="Age"
-            rules={[{ required: true, message: 'Please enter Course Age' }]}
+            rules={[{ required: true, message: "Please enter Course Age" }]}
             initialValue={record.age}
           >
             <Input />

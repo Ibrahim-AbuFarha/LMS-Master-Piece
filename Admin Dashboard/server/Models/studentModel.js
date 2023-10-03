@@ -59,10 +59,8 @@ studentSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
-studentSchema.methods.correctPassword = async function (
-  candidatePassword,
-  studentPassword
-) {
+///
+studentSchema.methods.correctPassword = async function (candidatePassword,studentPassword) {
   return await bcrypt.compare(candidatePassword, studentPassword);
 };
 

@@ -10,7 +10,7 @@ exports.getAllStudents = async (req, res) => {
     const students = await features.query;
     res.status(200).json({
       state: 'success',
-      students: { students, count },
+      results: { students, count },
     });
   } catch (err) {
     res.status(400).json({
@@ -33,7 +33,7 @@ exports.getStudentByName = async (req, res) => {
 
   res.status(200).json({
     state: 'success',
-    students: { students, count },
+    results: { students, count },
   });
 };
 

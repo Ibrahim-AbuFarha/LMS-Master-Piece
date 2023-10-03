@@ -15,7 +15,7 @@
       ]
     ],
     "splash": {
-      "image": "https://olte.ozyegin.edu.tr/sites/default/files/inline-images/lms-kuy2.png",
+      "image": "./assets/logoLms.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -16,7 +16,8 @@ const {
   deleteRequest,
   getCurrentTeacher,
 } = require('./../Controllers/teacherController');
-const { protect } = require('../middleware/auth');
+
+const { protect, restrictTo } = require('../middleware/auth');
 
 Router.route('/').get(getAllTeachers).post(createTeacher);
 Router.route('/currentTeacher').get(protect, getCurrentTeacher);

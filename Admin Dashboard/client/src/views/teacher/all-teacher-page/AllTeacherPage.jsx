@@ -7,14 +7,14 @@ const AllTeacherPage = () => {
       <Typography.Title level={1} style={{ margin: '0 0 20px' }}>
         All Teachers
       </Typography.Title>
-      <Input.Search
+      {/* <Input.Search
         style={{ width: 247, marginBottom: 20 }}
         placeholder="search for Teachers"
-      ></Input.Search>
+      ></Input.Search> */}
       <TeacherList />
-      <div className="end">
+      {/* <div className="end">
         <Pagination total={50}></Pagination>
-      </div>
+      </div> */}
     </div>
   );
 };

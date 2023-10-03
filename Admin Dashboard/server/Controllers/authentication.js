@@ -66,6 +66,8 @@ exports.signInTeacher = async (req, res, next) => {
     const oneDay = 1000 * 60 * 60 * 24;
 
     res.cookie('token', token, {
+      //can't modified by the browser
+
       httpOnly: true,
       secure: true,
       sameSite: 'none',
@@ -115,9 +117,9 @@ exports.signInStudent = async (req, res, next) => {
 };
 
 exports.logout = async (req, res) => {
-  res.cookie('toekn', 'logout', {
+  res.cookie('token', '', {
     httpOnly: true,
-    expires: new Date(Date.now() + 3 * 1000),
+    expires: new Date(Date.now() + 1000),
   });
   res.status(202).json({ msg: 'logout ' });
 };

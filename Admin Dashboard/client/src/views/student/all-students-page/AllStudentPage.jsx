@@ -1,17 +1,19 @@
-import { LMS_API } from '../../../../api/api';
-import StudentTable from './StudentTable';
-import { Input, Pagination, Typography } from 'antd';
-import { useEffect, useState } from 'react';
+import { LMS_API } from "../../../../api/api";
+import StudentTable from "./StudentTable";
+import { Input, Pagination, Typography } from "antd";
+import { useEffect, useState } from "react";
 
 const AllStudentsPage = () => {
-  const [students, setStudents] = useState(null);
+  const [students, setStudents] = useState([]);
+  const [count, setCount] = useState(0);
 
   const getStudents = async (page) => {
     try {
       const { data } = await LMS_API.get(`students?page=${page}&limit=2`);
-
-      setStudents(data.students);
-      console.log(data.students);
+      console.log(data);
+      setStudents(data.results.students);
+      setCount(data.results.count);
+      console.log(data.results);
     } catch (error) {
       console.log(error.message);
     }
@@ -22,12 +24,13 @@ const AllStudentsPage = () => {
   }, []);
 
   const handelEdit = async (values, id) => {
+    console.log(values, id);
     const { data } = await LMS_API.patch(`students/${id}`, values);
-
+    console.log(data);
     const updatedStudents = students.map((item) =>
       item._id !== id ? item : data.student
     );
-
+    console.log(updatedStudents);
     setStudents(updatedStudents);
   };
 
@@ -41,7 +44,8 @@ const AllStudentsPage = () => {
     const { data } = await LMS_API.get(
       `/students/searchByName?searchString=${value}`
     );
-    setStudents(data.students);
+    console.log(data);
+    setStudents(data.results.students);
   };
 
   const handlePagination = (value) => {
@@ -49,10 +53,9 @@ const AllStudentsPage = () => {
   };
   console.log(students);
 
-  if (!students) return <div>loading...</div>;
   return (
     <div>
-      <Typography.Title level={1} style={{ margin: '0 0 20px' }}>
+      <Typography.Title level={1} style={{ margin: "0 0 20px" }}>
         All Students
       </Typography.Title>
       <Input.Search
@@ -61,14 +64,14 @@ const AllStudentsPage = () => {
         onSearch={handleSearch}
       ></Input.Search>
       <StudentTable
-        students={students.students}
+        students={students}
         onDelete={handelDelete}
         onEdit={handelEdit}
       />
       <div className="end">
         <Pagination
-          total={students.count}
-          pageSize={2}
+          total={count}
+          pageSize={10}
           onChange={handlePagination}
         ></Pagination>
       </div>

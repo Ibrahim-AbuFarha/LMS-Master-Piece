@@ -11,7 +11,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ChevronRightIcon, ArrowLeftIcon } from "react-native-heroicons/solid";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { LMS_API } from "../api/api";
 
 export default function SubjectDetails() {
   const navigation = useNavigation();
@@ -22,9 +22,7 @@ export default function SubjectDetails() {
 
   const getCourse = async () => {
     try {
-      const { data } = await axios.get(
-        `http://192.168.1.17:8000/api/v1/courses/${courseId}`
-      );
+      const { data } = await LMS_API.get(`/courses/${courseId}`);
       console.log("data course=====================", data);
       SetCourse(data.course);
     } catch (error) {
@@ -39,13 +37,15 @@ export default function SubjectDetails() {
   if (!course) return;
 
   const renderSections = () => {
-    return course.sections.map((item) => (
+    return course.sections.map((item, index) => (
       <View key={item._id} className="flex flex-row  justify-around">
-        <Text className="text-lg px-5 mb-3">1. {item.title}</Text>
+        <Text className="text-lg px-5 mb-3">
+          {index + 1}. {item.title}
+        </Text>
         <Text className="text-lg text-gray-400">
           ({item.lessons.length} materials)
         </Text>
-        <TouchableOpacity
+        <TouchableOpacity className="ml-5"
           onPress={() =>
             navigation.navigate("CourseDetails", {
               sectionId: item._id,
@@ -100,7 +100,7 @@ export default function SubjectDetails() {
         <View className="flex flex-row items-center gap-4 px-4 mb-4">
           <Image source={require("../assets/images/home/Math.png")} />
           <View>
-            <Text className="text-2xl">suzi</Text>
+            <Text className="text-2xl">{course.teacherId.fullName}</Text>
             <Text className="text-gray-400 text-xl">
               {course.teacherId.course} Teacher
             </Text>

@@ -5,8 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { useRoute } from "@react-navigation/native";
 import { Video } from "expo-av";
-import axios from "axios";
-
+import { LMS_API } from "../api/api";
 export default function CourseDetails() {
   const route = useRoute();
   const { sectionId } = route.params;
@@ -14,13 +13,11 @@ export default function CourseDetails() {
   const navigation = useNavigation();
   const [section, setSection] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
-
+  const [videoUri, setVideoUri] = useState(null);
   useEffect(() => {
     const getSection = async () => {
       try {
-        const { data } = await axios.get(
-          `http://192.168.1.17:8000/api/v1/sections/${sectionId}`
-        );
+        const { data } = await LMS_API.get(`/sections/${sectionId}`);
         console.log("data.section==============", data);
         setSection(data.section);
 
@@ -35,8 +32,6 @@ export default function CourseDetails() {
 
     getSection();
   }, []);
-
-  const [videoUri, setVideoUri] = useState(null);
 
   const pickVideo = (videoUrl) => {
     console.log("videoUrl=====", videoUrl);
@@ -67,7 +62,9 @@ export default function CourseDetails() {
           </Text>
 
           <Video
-            source={{ uri: videoUri }}
+            source={{
+              uri: "https://firebasestorage.googleapis.com/v0/b/rect-practice-b01ba.appspot.com/o/videos%2F1%20-%20How%20to%20Get%20Help.mp479684a6c-e5d9-4d5a-8834-4d64527c13dd?alt=media&token=14f27b24-5d04-4741-9c13-ffb885c87ade",
+            }}
             style={{ width: "100%", aspectRatio: 16 / 9 }}
             shouldPlay={isPlaying}
             useNativeControls

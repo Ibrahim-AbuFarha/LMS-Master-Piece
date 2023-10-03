@@ -1,16 +1,16 @@
-import { Layout } from 'antd';
-import Sidebar from '../../components/layout/sidebar';
-import Header from '../../components/layout/Header';
+import { Layout } from "antd";
+import Sidebar from "../../components/layout/Sidebar";
+import Header from "../../components/layout/Header";
 const { Content } = Layout;
 
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
     <Layout
       style={{
-        height: '100vh',
-        overflow: 'hidden',
+        height: "100vh",
+        overflow: "hidden",
       }}
     >
       <Sidebar />
@@ -18,13 +18,13 @@ const MainLayout = () => {
         <Header
           style={{
             padding: 0,
-            background: 'black',
+            background: "black",
           }}
         />
         <Content
           style={{
             padding: 20,
-            overflow: 'scroll',
+            overflow: "scroll",
           }}
         >
           <Outlet />

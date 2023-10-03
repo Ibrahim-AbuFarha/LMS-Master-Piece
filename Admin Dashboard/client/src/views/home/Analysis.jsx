@@ -1,45 +1,38 @@
-import { useContext, useEffect, useState } from 'react';
-import SchoolCalendar from './SchoolCalender';
+import { useContext, useEffect, useState } from "react";
+import SchoolCalendar from "./SchoolCalender";
 
-import axios from 'axios';
-import AnalysisRow from './AnalysisRow';
+import axios from "axios";
+import AnalysisRow from "./AnalysisRow";
 
-import ClassStudentChart from './ClassStudentChart';
-import TeacherAdditionChart from './TeacherAdditionChart';
-import { LMS_API } from '../../../api/api';
-import { Row, Col, Card } from 'antd';
-import LastStudentsAdded from './LastStudentsAdded';
+import ClassStudentChart from "./ClassStudentChart";
+import TeacherAdditionChart from "./TeacherAdditionChart";
+import { LMS_API } from "../../../api/api";
+import { Row, Col, Card } from "antd";
+import LastStudentsAdded from "./LastStudentsAdded";
 
-import AuthContext from '../../store/authContext';
-
-const classData = [
-  { className: 'Math 101', studentCount: 30 },
-  { className: 'History 202', studentCount: 25 },
-  { className: 'History 202', studentCount: 25 },
-];
+import AuthContext from "../../store/authContext";
 
 function Analysis() {
   const [analysis, SetAnalysis] = useState([]);
   const [lastStudents, setLastStudents] = useState([]);
   const [teacherData, setTeacherData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { user } = useContext(AuthContext);
 
   const [teacherClasses, setTeacherClasses] = useState([]);
 
   const getNumberResources = async () =>
-    await axios.get('http://127.0.0.1:8000/api/v1/analysis');
+    await axios.get("http://127.0.0.1:8000/api/v1/analysis");
 
   const getTeacherByMonth = async () =>
-    LMS_API.get('/analysis/getTeacherDataByMonth');
+    LMS_API.get("/analysis/getTeacherDataByMonth");
 
-  const getLastAddedStudent = async () => LMS_API.get(`/students`);
+  const getLastAddedStudent = async () => LMS_API.get(`/students?limit=5`);
 
-  const getAllClasses = async () =>
-    LMS_API.get(`classRooms?teacherId=${user._id}`);
+  const getAllClasses = async () => LMS_API.get(`classRooms`);
 
   useEffect(() => {
     setLoading(true);
+    //send 4 requests in the same time in parallel if one of them error => error
     Promise.all([
       getNumberResources(),
       getTeacherByMonth(),
@@ -48,13 +41,12 @@ function Analysis() {
     ])
       .then((res) => {
         const { data: resoursesRes } = res[0];
-
         const { data: teacherRes } = res[1];
         const { data: lastStudentRes } = res[2];
         const { data: allClasses } = res[3];
 
         setTeacherData(teacherRes.teachers);
-        setLastStudents(lastStudentRes.students.students);
+        setLastStudents(lastStudentRes.results.students);
         SetAnalysis(resoursesRes.resources);
         setTeacherClasses(allClasses.classRooms);
       })
@@ -68,12 +60,12 @@ function Analysis() {
 
   if (loading) return <div> loading</div>;
 
-  console.log(teacherData);
+  console.log(lastStudents);
   return (
     <div>
       <AnalysisRow analysis={analysis} />
 
-      <Row gutter={20} justify={'space-between'}>
+      <Row gutter={20} justify={"space-between"}>
         <Col span={14}>
           <Card>
             <TeacherAdditionChart teacherData={teacherData} />
@@ -88,7 +80,7 @@ function Analysis() {
           </Card>
         </Col>
         <Col style={{ marginTop: 25 }} span={6}>
-          <LastStudentsAdded students={lastStudents.slice(0, 5)} />
+          <LastStudentsAdded students={lastStudents} />
         </Col>
       </Row>
     </div>

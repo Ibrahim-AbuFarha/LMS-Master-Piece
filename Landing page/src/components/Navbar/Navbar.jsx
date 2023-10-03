@@ -31,8 +31,8 @@ const Navbar = () => {
               className="text-3xl sm:hidden cursor-pointer"
               onClick={() => setToggle(true)}
             />
-            <div className="text-xl text-Teal uppercase tracking-wide font-bold">
-              Skillex
+            <div className="text-xl text-[#52B6DF]  tracking-wide font-bold">
+              EduZ
             </div>
           </div>
           <div className="sm:flex items-center hidden">
