@@ -1,6 +1,6 @@
-import React from 'react';
-import { Space, Avatar, Card, Typography, Divider } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import React from "react";
+import { Space, Avatar, Card, Typography, Divider } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 const LastStudentsAdded = ({ students }) => {
   return (
     <Card>
@@ -9,9 +9,11 @@ const LastStudentsAdded = ({ students }) => {
       </Typography.Title>
       <Space size={20} direction="vertical">
         {students.map((student) => (
+          //mapping students
+
           <Space size={10} key={student._id}>
             <Avatar icon={<UserOutlined />} size={40} src={student.url} />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <Typography.Text>{student.fullName}</Typography.Text>
               <Typography.Text>{student.email}</Typography.Text>
             </div>
@@ -24,6 +26,3 @@ const LastStudentsAdded = ({ students }) => {
 };
 
 export default LastStudentsAdded;
-
-
-

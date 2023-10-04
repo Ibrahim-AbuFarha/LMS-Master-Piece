@@ -1,22 +1,22 @@
-import { Form, Input, Button, Row, Col, Select, message } from 'antd';
-import axios from 'axios';
-
+import { Form, Input, Button, Row, Col, Select, message } from "antd";
+import { LMS_API } from "../../../../api/api";
 const AddStudentPage = () => {
   const [form] = Form.useForm();
+  //add new student
   const onAdd = async () => {
     try {
       const values = await form.validateFields();
-      await axios.post('http://127.0.0.1:8000/api/v1/students', values);
-      message.success('Student has added');
+      await LMS_API.post("/students", values);
+      message.success("Student has added");
       form.resetFields();
     } catch (error) {
-      message.error('error');
+      message.error("error");
       console.log(error.response.data.message);
     }
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: "20px" }}>
       <h1>Basic Details</h1>
       <Form
         name="addTeacherForm"
@@ -30,7 +30,7 @@ const AddStudentPage = () => {
               label="Full Name"
               name="fullName"
               rules={[
-                { required: true, message: 'Please enter your full name' },
+                { required: true, message: "Please enter your full name" },
               ]}
             >
               <Input size="large" placeholder="Enter your Full Name" />
@@ -41,7 +41,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Gender"
               name="gender"
-              rules={[{ required: true, message: 'Please select Gender' }]}
+              rules={[{ required: true, message: "Please select Gender" }]}
             >
               <Select size="large" placeholder="">
                 <Select.Option value="male">Male</Select.Option>
@@ -56,7 +56,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Email ID"
               name="email"
-              rules={[{ required: true, message: 'Please enter the Email ID' }]}
+              rules={[{ required: true, message: "Please enter the Email ID" }]}
             >
               <Input type="email" size="large" />
             </Form.Item>
@@ -65,7 +65,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={[{ required: true, message: 'Please enter the Password' }]}
+              rules={[{ required: true, message: "Please enter the Password" }]}
             >
               <Input.Password size="large" />
             </Form.Item>
@@ -74,7 +74,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Password Confirm"
               name="passwordConfirm"
-              rules={[{ required: true, message: 'Please enter the Password' }]}
+              rules={[{ required: true, message: "Please enter the Password" }]}
             >
               <Input.Password size="large" />
             </Form.Item>
@@ -86,7 +86,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Address"
               name="address"
-              rules={[{ required: true, message: 'Please enter the Address' }]}
+              rules={[{ required: true, message: "Please enter the Address" }]}
             >
               <Input size="large" />
             </Form.Item>
@@ -95,7 +95,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Mobile"
               name="mobile"
-              rules={[{ required: true, message: 'Please enter the Mobile' }]}
+              rules={[{ required: true, message: "Please enter the Mobile" }]}
             >
               <Input size="large" />
             </Form.Item>
@@ -104,7 +104,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Grade"
               name="grade"
-              rules={[{ required: true, message: 'Please enter the grade' }]}
+              rules={[{ required: true, message: "Please enter the grade" }]}
             >
               <Input size="large" />
             </Form.Item>
@@ -113,7 +113,7 @@ const AddStudentPage = () => {
             <Form.Item
               label="Age"
               name="age"
-              rules={[{ required: true, message: 'Please enter the age' }]}
+              rules={[{ required: true, message: "Please enter the age" }]}
             >
               <Input size="large" />
             </Form.Item>

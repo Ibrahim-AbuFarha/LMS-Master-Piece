@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-app.use(express.json());
+// to log information about incoming HTTP requests
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
-const xss = require('xss-clean');
+
 const mongoSanitize = require('express-mongo-sanitize');
 const classRoomRouter = require('./Routes/classRoomRoutes');
 const courseRouter = require('./Routes/courseRoutes');
@@ -37,6 +37,7 @@ const limiter = rateLimit({
 
 //Data sanitization against no sql query injection
 app.use(mongoSanitize()); // Looking at req.body ,req.querystring and req.params and filter out all
+
 //Data sanitization against xss "scripting attacks"
 
 app.use(cors(corsOptions));
@@ -46,11 +47,12 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+//to check every request time
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
-
+// to enable the parsing and handling of cookies in incoming HTTP requests
 app.use(cookieParser());
 // routes
 app.use('/api/v1/classRooms', classRoomRouter);

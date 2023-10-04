@@ -1,13 +1,13 @@
 import { Form, Input, Button, Row, Col, Select } from "antd";
-import axios from "axios";
-import { message } from "antd";
 
+import { message } from "antd";
+import { LMS_API } from "../../../../api/api";
 const AddTeacherPage = () => {
   const [form] = Form.useForm();
   const onAdd = async () => {
     try {
       const values = await form.validateFields();
-      await axios.post("http://127.0.0.1:8000/api/v1/teachers", values);
+      await LMS_API.post("/teachers", values);
       message.success("Teacher has added");
       form.resetFields();
     } catch (error) {
@@ -100,15 +100,7 @@ const AddTeacherPage = () => {
               <Input size="large" />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Course"
-              name="course"
-              rules={[{ required: true, message: "Please enter the grade" }]}
-            >
-              <Input size="large" />
-            </Form.Item>
-          </Col>
+
           <Col span={8}>
             <Form.Item
               label="Age"

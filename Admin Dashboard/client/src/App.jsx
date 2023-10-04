@@ -1,22 +1,22 @@
-import MainLayout from './views/main-layout/MainLayout';
-import './index.css';
-import { Route, Routes } from 'react-router-dom';
-import AllStudentsPage from './views/student/all-students-page/AllStudentPage';
-import AddStudentPage from './views/student/add-student-page/AddStudentPage';
-import AllTeacherPage from './views/teacher/all-teacher-page/AllTeacherPage';
-import AddTeacherPage from './views/teacher/add-teacher-page/AddTeacherPage';
-import MyCoursesPage from './views/courses/my-courses-page/MyCoursesPage';
-import CourseDetails from './views/courses/course-details-page/CourseDetailsPage';
-import MyClassesPage from './views/classes/my-classes-page/MyClassesPage';
-import ClassPage from './views/classes/class-details-page/ClassPage';
-import Login from './views/login/Login';
-import SignUp from './views/signup/SignUp';
-import ResetPassword from './views/resetPassword/ResetPassword';
-import NewPasswordForm from './views/resetPassword/NewPassword';
-import Analysis from './views/home/Analysis';
-import Profile from './views/profile/Profile';
-import RequestApproval from './views/requestsApproval/RequestsAprroval';
-import PrivateRoute from './components/guard/PrivateRoute';
+import MainLayout from "./views/main-layout/MainLayout";
+import "./index.css";
+import { Route, Routes } from "react-router-dom";
+import AllStudentsPage from "./views/student/all-students-page/AllStudentPage";
+import AddStudentPage from "./views/student/add-student-page/AddStudentPage";
+import AllTeacherPage from "./views/teacher/all-teacher-page/AllTeacherPage";
+import AddTeacherPage from "./views/teacher/add-teacher-page/AddTeacherPage";
+import MyCoursesPage from "./views/courses/my-courses-page/MyCoursesPage";
+import CourseDetails from "./views/courses/course-details-page/CourseDetailsPage";
+import MyClassesPage from "./views/classes/my-classes-page/MyClassesPage";
+import ClassPage from "./views/classes/class-details-page/ClassPage";
+import Login from "./views/login/Login";
+import SignUp from "./views/signup/SignUp";
+import ResetPassword from "./views/resetPassword/ResetPassword";
+import NewPasswordForm from "./views/resetPassword/NewPassword";
+import Analysis from "./views/home/Analysis";
+import Profile from "./views/profile/Profile";
+import RequestApproval from "./views/requestsApproval/RequestsAprroval";
+import PrivateRoute from "./components/guard/PrivateRoute";
 
 const App = () => {
   return (
@@ -38,7 +38,7 @@ const App = () => {
         <Route
           path="/RequestsApproval"
           element={
-            <PrivateRoute role={'admin'}>
+            <PrivateRoute role={"admin"}>
               <RequestApproval></RequestApproval>
             </PrivateRoute>
           }
@@ -48,7 +48,14 @@ const App = () => {
         <Route path="/AddStudent" element={<AddStudentPage />}></Route>
 
         <Route path="/AllTeacher" element={<AllTeacherPage />}></Route>
-        <Route path="/AddTeacher" element={<AddTeacherPage />}></Route>
+        <Route
+          path="/AddTeacher"
+          element={
+            <PrivateRoute role={"admin"}>
+              <AddTeacherPage></AddTeacherPage>
+            </PrivateRoute>
+          }
+        ></Route>
 
         <Route path="/MyCourses" element={<MyCoursesPage />}></Route>
         <Route path="/CourseDetails/:id" element={<CourseDetails />}></Route>

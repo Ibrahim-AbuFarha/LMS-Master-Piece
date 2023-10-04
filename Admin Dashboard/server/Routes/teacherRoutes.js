@@ -19,7 +19,9 @@ const {
 
 const { protect, restrictTo } = require('../middleware/auth');
 
-Router.route('/').get(getAllTeachers).post(createTeacher);
+Router.route('/')
+  .get(getAllTeachers)
+  .post(protect, restrictTo('admin'), createTeacher);
 Router.route('/currentTeacher').get(protect, getCurrentTeacher);
 Router.route('/signUpTeacher').post(signUpTeacher);
 Router.route('/signInTeacher').post(signInTeacher);

@@ -7,14 +7,16 @@ const AddSectionModal = ({ onAdd }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = useForm();
+  //show add section
   const showModal = () => {
     setOpen(true);
   };
-
+  //hide add section
   const handleCancel = () => {
     setOpen(false);
   };
 
+  //add new Section
   const handleOk = async () => {
     setConfirmLoading(true);
     const value = form.getFieldsValue();

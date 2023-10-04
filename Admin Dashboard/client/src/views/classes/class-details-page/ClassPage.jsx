@@ -1,19 +1,18 @@
-import { Typography } from 'antd';
+import { Typography } from "antd";
 
-import ClassStudentsTable from './ClassStudentsTable';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import AddStudentToClassModal from './AddStudentToClassModal';
+import ClassStudentsTable from "./ClassStudentsTable";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import AddStudentToClassModal from "./AddStudentToClassModal";
 
-import { LMS_API } from '../../../../api/api';
+import { LMS_API } from "../../../../api/api";
 
 const ClassPage = () => {
   const [students, setStudents] = useState([]);
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState("");
   const { id } = useParams();
 
-  console.log(students);
-
+  // to get all student from specific classroom
   const getAllStudents = async () => {
     const { data } = await LMS_API.get(`/classRooms/${id}`);
 
@@ -25,7 +24,7 @@ const ClassPage = () => {
   useEffect(() => {
     getAllStudents();
   }, []);
-
+  //edit student mark
   const handleEditStudentMark = async (values, studentId) => {
     const { first, mid, final } = values;
 
@@ -49,7 +48,7 @@ const ClassPage = () => {
     });
     setStudents(updatedStudents);
   };
-
+  //delete the student from the class
   const handleDeleteStudent = async (record) => {
     await LMS_API.delete(
       `/classRooms/${id}/editStudentFromClass/${record.key}`
@@ -60,12 +59,12 @@ const ClassPage = () => {
 
     setStudents(updatedStudent);
   };
+  //add the student to the class
   const handleAddStudent = async (student) => {
     const { data } = await LMS_API.post(
       `/classRooms/${id}/addStudentToClass/${student._id}`,
       student
     );
-
     setStudents([
       ...students,
       { marks: { first: 0, mid: 0, final: 0 }, _id: data.addedStudent },

@@ -2,14 +2,15 @@ import { Avatar, Card, Typography } from "antd";
 import { Space, Tooltip } from "antd";
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { LMS_API } from "../../../../api/api";
+
 const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
+  //get all approved teachers
+
   const getTeachers = async () => {
     try {
-      const { data } = await axios.get(
-        "http://127.0.0.1:8000/api/v1/teachers?status=approved"
-      );
+      const { data } = await LMS_API.get("/teachers?status=approved");
       const updateData = data.teachers.map((item) => {
         return { ...item, key: item._id };
       });

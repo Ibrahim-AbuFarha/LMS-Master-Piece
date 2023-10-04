@@ -9,8 +9,7 @@ const signToken = (payload) => {
 
 exports.signUpTeacher = async (req, res, next) => {
   try {
-    console.log(req.body);
-    const newTeacher = await Teacher.create(req.body); //return a promise
+    const newTeacher = await Teacher.create(req.body);
 
     res.status(201).json({
       status: 'success',
@@ -46,34 +45,34 @@ exports.signUpStudent = async (req, res, next) => {
 
 exports.signInTeacher = async (req, res, next) => {
   try {
-    console.log('122');
     const { email, password } = req.body;
+    //check of email and password are provided
     if (!email || !password)
       throw new Error('Please provide email and password');
 
     const teacher = await Teacher.findOne({ email });
+    //check if the teacher is exist and the password is correct
     if (
       !teacher ||
       !(await teacher.correctPassword(password, teacher.password))
     )
       throw new Error('Incorrect email or password');
-
+    //check the status of the teacher
     if (teacher.status === 'pending') throw new Error(' teacher is pending');
 
     //3)If everything ok, send token to client
     const token = signToken({ id: teacher._id, role: teacher.role });
-
+    //token expire in
     const oneDay = 1000 * 60 * 60 * 24;
-
+    //send token in the cookie
     res.cookie('token', token, {
       //can't modified by the browser
-
       httpOnly: true,
       secure: true,
       sameSite: 'none',
       expires: new Date(Date.now() + oneDay),
     });
-
+    //send just the data without password
     const { password: pass, ...result } = teacher._doc;
 
     res.status(200).json({
@@ -89,14 +88,15 @@ exports.signInTeacher = async (req, res, next) => {
   }
 };
 exports.signInStudent = async (req, res, next) => {
-  //1)Check if email and password exist
   try {
     const { email, password } = req.body;
+
+    //1)Check if email and password exist
     if (!email || !password)
       throw new Error('Please provide email and password');
 
     const student = await Student.findOne({ email });
-
+    //2)check if the student is exist and the password is correct
     if (
       !student ||
       !(await student.correctPassword(password, student.password))
@@ -115,7 +115,7 @@ exports.signInStudent = async (req, res, next) => {
     console.log(err);
   }
 };
-
+//log out and delete the token from the cookie
 exports.logout = async (req, res) => {
   res.cookie('token', '', {
     httpOnly: true,

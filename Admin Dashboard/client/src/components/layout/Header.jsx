@@ -1,19 +1,16 @@
 import React, { useContext } from "react";
-import { Layout, Menu, Dropdown, Avatar } from "antd";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Layout, Dropdown, Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../store/authContext";
 
 const { Header } = Layout;
 
 const AppHeader = () => {
+  //navigate to another page
   const navigate = useNavigate();
-  // Sample user data
-  // const user = {
-  //   name: 'Admin User',
-  //   profilePicture: 'URL_TO_YOUR_PROFILE_PICTURE',
-  // };
 
+  //context consume
   const { user, logout } = useContext(AuthContext);
 
   // Handle logout
@@ -22,17 +19,7 @@ const AppHeader = () => {
     navigate("/login");
   };
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="profile">
-        <Link to="/profile">Profile</Link>
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="logout" onClick={handleLogout}>
-        <LogoutOutlined /> Logout
-      </Menu.Item>
-    </Menu>
-  );
+  //our items on profile icon
 
   const items = [
     {

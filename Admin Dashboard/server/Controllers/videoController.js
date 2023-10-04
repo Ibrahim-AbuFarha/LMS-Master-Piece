@@ -1,6 +1,8 @@
 const Video = require('./../Models/videoModel');
 const Course = require('./../Models/courseModel');
 
+
+//get all videos
 exports.getAllVideos = async (req, res) => {
   try {
     const videos = await Video.find({});
@@ -16,7 +18,7 @@ exports.getAllVideos = async (req, res) => {
     });
   }
 };
-
+//add new Video
 exports.addVideo = async (req, res) => {
   try {
     const { courseId } = req.body;
@@ -24,13 +26,7 @@ exports.addVideo = async (req, res) => {
     //check if there is classRoom and student
     if (!course) throw new Error('classRoom is not exist');
 
-    // check if the student is already joined
-
     const video = await Video.create(req.body);
-
-    // if (!video) {
-    //   // return next(new AppError('No tour found with that ID', 404));
-    // }
 
     res.status(201).json({
       status: 'success',
@@ -43,13 +39,14 @@ exports.addVideo = async (req, res) => {
     });
   }
 };
+//delete video
 exports.deleteVideo = async (req, res) => {
   try {
     const { id } = req.params;
-    await Video.findByIdAndDelete(id);
-    // if (!video) {
-    //   //   return next(new AppError('No tour found with that ID', 404));
-    // }
+    const video = await Video.findByIdAndDelete(id);
+    if (!video) {
+      throw new Error('No video found with that ID');
+    }
     res.status(200).json({
       status: 'success',
     });

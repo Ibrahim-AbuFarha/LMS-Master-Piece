@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import { Modal, Button } from 'antd';
-import { DeleteFilled } from '@ant-design/icons';
+import { useState } from "react";
+import { Modal, Button, message } from "antd";
 
 const DeleteModal = ({ onDelete, title, text }) => {
+  //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
 
+  //Delete function
   const handleDelete = () => {
     onDelete();
+    message.success(`Deleted`);
     setModalVisible(false);
   };
 

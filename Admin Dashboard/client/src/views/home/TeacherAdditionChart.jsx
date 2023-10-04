@@ -1,18 +1,20 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as Chartjs } from 'chart.js/auto';
+import React from "react";
+import { Line } from "react-chartjs-2";
+import { Chart as Chartjs } from "chart.js/auto";
 const TeacherAdditionChart = ({ teacherData }) => {
+  //month of add teacher
   const monthLabels = teacherData.map((item) => item.month);
+  //number of teacher in the month
   const teacherCounts = teacherData.map((item) => item.teacherCount);
 
   const data = {
     labels: monthLabels,
     datasets: [
       {
-        label: 'Number of Teachers Added',
+        label: "Number of Teachers Added",
         data: teacherCounts,
         fill: false,
-        borderColor: 'rgb(75, 192, 192)', // You can customize the line color
+        borderColor: "rgb(75, 192, 192)", // You can customize the line color
       },
     ],
   };
@@ -23,7 +25,7 @@ const TeacherAdditionChart = ({ teacherData }) => {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Number of Teachers Added',
+          text: "Number of Teachers Added",
         },
       },
     },

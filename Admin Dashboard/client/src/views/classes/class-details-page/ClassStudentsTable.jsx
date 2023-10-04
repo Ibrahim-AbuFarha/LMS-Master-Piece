@@ -3,6 +3,7 @@ import EditStudentMarkModal from "./EditStudentMarkModal";
 import DeleteModal from "../../../components/common/DeleteModal";
 
 const ClassStudentsTable = ({ onEdit, onDelete, students }) => {
+  //columns of the student table
   const columns = [
     {
       title: "Name",
@@ -53,7 +54,7 @@ const ClassStudentsTable = ({ onEdit, onDelete, students }) => {
   ];
 
   console.log(students);
-
+  //adjust the shape
   const adjustedData = students?.map((student) => {
     return {
       email: student._id.email,

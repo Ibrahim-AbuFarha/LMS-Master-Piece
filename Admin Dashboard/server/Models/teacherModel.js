@@ -65,14 +65,16 @@ const teacherSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
+//check if password modified before the doc saved in db
 teacherSchema.pre('save', async function (next) {
+  // if this is not a new teacher creation or the password hasn't changed),
+  //  it skips the middleware
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
   next();
 });
-
+//compare password return true if the password is correct
 teacherSchema.methods.correctPassword = async function (
   candidatePassword,
   teacherPassword
@@ -80,31 +82,31 @@ teacherSchema.methods.correctPassword = async function (
   return await bcrypt.compare(candidatePassword, teacherPassword);
 };
 
-teacherSchema.methods.changePasswordAfter = function (JWTTimesStamp) {
-  if (this.passwordChangedAt) {
-    const changedTimeStamp = parseInt(
-      this.passwordChangedAt.getTime() / 1000,
-      10
-    );
-    console.log(passwordChangedAt, JWTTimesStamp);
-    return JWTTimesStamp < changedTimeStamp;
-  }
-  //
-  return false;
-};
-teacherSchema.methods.createPasswordResetToken = function () {
-  const resetToken = crypto.randomBytes(32).toString('hex');
-  //encrypting
-  this.passwordResetToken = crypto
-    .createHash('sha256')
-    .update(resetToken)
-    .digest('hex');
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+// teacherSchema.methods.changePasswordAfter = function (JWTTimesStamp) {
+//   if (this.passwordChangedAt) {
+//     const changedTimeStamp = parseInt(
+//       this.passwordChangedAt.getTime() / 1000,
+//       10
+//     );
+//     console.log(passwordChangedAt, JWTTimesStamp);
+//     return JWTTimesStamp < changedTimeStamp;
+//   }
+//   //
+//   return false;
+// };
+// teacherSchema.methods.createPasswordResetToken = function () {
+//   const resetToken = crypto.randomBytes(32).toString('hex');
+//   //encrypting
+//   this.passwordResetToken = crypto
+//     .createHash('sha256')
+//     .update(resetToken)
+//     .digest('hex');
+//   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
-  return resetToken;
-  //we sent unencrypted token to the user
-  //and store the encrypted token in db
-};
+//   return resetToken;
+//   //we sent unencrypted token to the user
+//   //and store the encrypted token in db
+// };
 
 const Teacher = mongoose.model('Teacher', teacherSchema);
 

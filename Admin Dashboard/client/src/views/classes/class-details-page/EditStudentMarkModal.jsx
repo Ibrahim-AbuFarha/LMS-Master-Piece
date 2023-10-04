@@ -5,17 +5,18 @@ const EditStudentMarkModal = ({ onEdit, student }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
-
+//show edit modal
   const showModal = () => {
     setOpen(true);
   };
-
+//hide edit modal
   const handleCancel = () => {
     setOpen(false);
   };
-
+//edit the student when click "ok"
   const handleOk = async () => {
     try {
+      //validate inputs
       const values = await form.validateFields();
 
       setConfirmLoading(true);

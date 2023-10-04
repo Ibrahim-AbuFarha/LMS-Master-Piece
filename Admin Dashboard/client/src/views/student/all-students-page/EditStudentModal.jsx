@@ -13,7 +13,7 @@ const EditStudentModal = ({ onEdit, record }) => {
   const handleCancel = () => {
     setOpen(false);
   };
-
+  //edit studentInfo by sending the id and new values
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
@@ -42,7 +42,7 @@ const EditStudentModal = ({ onEdit, record }) => {
       >
         <Form form={form}>
           <Form.Item
-            name="name"
+            name="fullName"
             label="Full Name"
             rules={[{ required: true, message: "Please enter Full Name" }]}
             initialValue={record.fullName}

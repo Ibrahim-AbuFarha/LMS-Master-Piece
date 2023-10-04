@@ -1,7 +1,11 @@
 const Teacher = require('./../Models/teacherModel');
+//goal is to convert callback-based functions
+//(functions that use the traditional callback pattern)
+//into functions that return promises
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 
+//protects
 exports.protect = async (req, res, next) => {
   //1)Getting token and check of it's there
 
@@ -29,18 +33,16 @@ exports.protect = async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   console.log(decoded); //{ id: '64c0dc91d4bdbd432cf3712a', iat: 1690360978, exp: 1698136978 }
 
-  //4)Check if teacher changed password after the token has issued
-
   //grant access to protected route
-  req.user = { id: decoded.id }; //for future that we can then use it in a next mw func
+  req.user = { id: decoded.id, role: decoded.role }; //for future that we can then use it in a next mw func
 
   next();
 };
-
+//roles
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     //roles['admin',lead-guide],role='user'
-    console.log(req.user);
+    console.log('=============', req.user);
     if (!roles.includes(req.user.role))
       return res.status(403).json({
         error: "you don't have permission to do this action",

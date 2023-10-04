@@ -1,25 +1,21 @@
 import React from "react";
-import { Alert, Input, Button, Form, message } from "antd";
+import { Input, Button, Form, message } from "antd";
 import {
   UserOutlined,
   LockOutlined,
   MailOutlined,
   MobileOutlined,
 } from "@ant-design/icons";
-import "./SignUp.css"; // Import your CSS file for styling
+import "./SignUp.css";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { LMS_API } from "../../../api/api";
+
 const SignUpForm = () => {
-  const navigate = useNavigate();
   const signUp = async (values) => {
     try {
       console.log(values);
 
-      const { data } = await axios.post(
-        "http://127.0.0.1:8000/api/v1/teachers/signUpTeacher",
-        values
-      );
+      const { data } = await LMS_API.post("/teachers/signUpTeacher", values);
       console.log(data);
       message.success(
         "You will be notified when the admin accept your request"

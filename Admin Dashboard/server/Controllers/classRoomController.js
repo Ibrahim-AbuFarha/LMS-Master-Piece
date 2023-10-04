@@ -4,15 +4,12 @@ const Teacher = require('./../Models/teacherModel');
 const Mark = require('./../Models/markModel');
 
 const ApiFeatures = require('./../utils/ApiFeatures');
-
+//get all classRooms
 exports.getAllClassRooms = async (req, res) => {
   try {
+    //pagination and filter added in classRoom
     const features = new ApiFeatures(ClassRoom, req.query).filter();
     const classRooms = await features.query;
-
-    // if (!classRooms) {
-    //   // return next(new AppError('No tour found with that ID', 404));
-    // }
 
     res.status(200).json({
       status: 'success',
@@ -25,19 +22,17 @@ exports.getAllClassRooms = async (req, res) => {
     });
   }
 };
-
+//create classRoom if the teacherId is exist
 exports.createClassRoom = async (req, res) => {
   try {
     const { id: teacherId } = req.user;
-    console.log(teacherId);
-    console.log(req.body);
+
     const teacher = await Teacher.find({ teacherId });
+    //check it the teacher is exist
     if (!teacher) throw new Error('teacher is not exist');
     const classRoom = await ClassRoom.create({ ...req.body, teacherId });
     console.log(classRoom);
-    // if (!classRoom) {
-    //   // return next(new AppError('No tour found with that ID', 404));
-    // }
+
     res.status(201).json({
       status: 'success',
       classRoom,
@@ -49,13 +44,12 @@ exports.createClassRoom = async (req, res) => {
     });
   }
 };
+//delete classRoom
 exports.deleteClassRoom = async (req, res) => {
   try {
     const { id } = req.params;
     const classRoom = await ClassRoom.findByIdAndDelete(id);
-    // if (!classRoom) {
-    //   //   return next(new AppError('No tour found with that ID', 404));
-    // }
+    if (!classRoom) throw new Error('No classRoom found with that ID');
     res.status(200).json({
       status: 'success',
     });
@@ -66,6 +60,7 @@ exports.deleteClassRoom = async (req, res) => {
     });
   }
 };
+//update classRoom
 exports.updateClassRoom = async (req, res) => {
   try {
     const { id } = req.params;
@@ -73,10 +68,10 @@ exports.updateClassRoom = async (req, res) => {
     const classRoom = await ClassRoom.findByIdAndUpdate(id, req.body, {
       new: true,
     });
+    //return the modified document after the update operation ("new:true")
     console.log(classRoom);
-    // if (!classRoom) {
-    //   // return next(new AppError('No tour found with that ID', 404));
-    // }
+    if (!classRoom) throw new Error('No classRoom found with that ID');
+
     res.status(200).json({
       classRoom,
       status: 'success',
@@ -88,10 +83,11 @@ exports.updateClassRoom = async (req, res) => {
     });
   }
 };
-
+//get classRoom with students array using populate
 exports.getClassRoom = async (req, res, next) => {
   try {
     const { id } = req.params;
+    //find classRoom and populate with student array
     const classRoom = await ClassRoom.findById(id)
       .populate({
         path: 'students._id',
@@ -100,6 +96,7 @@ exports.getClassRoom = async (req, res, next) => {
       })
 
       .exec();
+    //check if classRoom is exist
     if (!classRoom) {
       throw new Error('No classRoom found with that ID');
     }
@@ -115,29 +112,33 @@ exports.getClassRoom = async (req, res, next) => {
     });
   }
 };
-
+// add student to classRoom
 exports.addStudentToClass = async (req, res) => {
   try {
     console.log('88998');
     const { classId, studentId } = req.params;
     const classRoom = await ClassRoom.findById(classId);
+    //check if classRoom is exist
+
     if (!classRoom) {
       throw new Error('No classRoom found with that ID');
     }
     const student = await Student.findById(studentId);
+    //check if student is exist
+
     if (!student) {
       throw new Error('No student found with that ID');
     }
-
+    //check if the student is already exist in the class
     const check = classRoom.students.find((item) => {
       return item._id.toString() === studentId;
     });
 
     if (check) throw new Error('student is already exist');
-
+    //push the new user into in class and the new class into the student
     classRoom.students.push(student._id);
     student.classRooms.push(classRoom._id);
-
+    //add the student into classRooms
     const addedStudent = await Student.findByIdAndUpdate(
       studentId,
       {
@@ -160,26 +161,30 @@ exports.addStudentToClass = async (req, res) => {
   }
 };
 
+//delete student from classRoom
 exports.deleteStudentFromClass = async (req, res) => {
   try {
     console.log(req.params);
     const { classId, studentId } = req.params;
     const classRoom = await ClassRoom.findById(classId);
+    //check if classRoom is exist
+
     if (!classRoom) {
       throw new Error('No classRoom found with that ID');
     }
 
-    console.log(classRoom);
     const student = await Student.findById(studentId);
-
+    //remove student from the classRoom
     classRoom.students = classRoom.students.filter(
       (item) => item._id.toString() !== studentId
     );
+    //Remove the classRoom from student
     student.classRooms = student.classRooms.filter(
       (item) => item._id.toString() !== classId
     );
 
     await classRoom.save();
+    //validate without save to ignore the required values
     await student.save({ validateBeforeSave: false });
     res.status(200).json({
       status: 'success',

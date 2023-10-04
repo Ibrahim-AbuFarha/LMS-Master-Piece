@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const AllStudentsPage = () => {
   const [students, setStudents] = useState([]);
   const [count, setCount] = useState(0);
-
+  //get students by limit and page(pagination)
   const getStudents = async (page) => {
     try {
       const { data } = await LMS_API.get(`students?page=${page}&limit=2`);
@@ -22,7 +22,7 @@ const AllStudentsPage = () => {
   useEffect(() => {
     getStudents(1);
   }, []);
-
+  //edit studentInfo
   const handelEdit = async (values, id) => {
     console.log(values, id);
     const { data } = await LMS_API.patch(`students/${id}`, values);
@@ -33,13 +33,13 @@ const AllStudentsPage = () => {
     console.log(updatedStudents);
     setStudents(updatedStudents);
   };
-
+  //delete student
   const handelDelete = async (record) => {
     await LMS_API.delete(`students/${record.key}`);
     const updatedStudents = students.filter((item) => item._id !== record.key);
     setStudents(updatedStudents);
   };
-
+  //search for student
   const handleSearch = async (value) => {
     const { data } = await LMS_API.get(
       `/students/searchByName?searchString=${value}`

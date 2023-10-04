@@ -1,36 +1,37 @@
-import { useState } from 'react';
-import { Button, Modal, Form, Input } from 'antd';
+import { useState } from "react";
+import { Button, Modal, Form, Input } from "antd";
 
-import { useForm } from 'antd/es/form/Form';
+import { useForm } from "antd/es/form/Form";
 
-const AddCourseModal = ({ onAdd }) => {
+const AddCourseModal = ({ onAdd, userId }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = useForm();
-
+  //to show the add course modal
   const showModal = () => {
     setOpen(true);
   };
-
+  //to hide the add course modal
   const handleCancel = () => {
     setOpen(false);
   };
-
+  // to add the new Course
   const handleOk = async () => {
     try {
       const value = await form.validateFields();
       setConfirmLoading(true);
-      await onAdd({ ...value, teacherId: '64e99fd628088aea43866180' });
-
+      await onAdd({ ...value, teacherId: userId });
       setOpen(false);
+      message.success("course has added");
     } catch (err) {
       console.log(err);
+      message.error("Check all input are correct");
     }
     setConfirmLoading(false);
   };
 
   return (
-    <div style={{ marginBottom: '10px' }}>
+    <div style={{ marginBottom: "10px" }}>
       <Button onClick={showModal}>+ Add Course</Button>
 
       <Modal
@@ -45,7 +46,7 @@ const AddCourseModal = ({ onAdd }) => {
             name="name"
             required
             label="Course Name"
-            rules={[{ required: true, message: 'Please enter lesson name' }]}
+            rules={[{ required: true, message: "Please enter lesson name" }]}
           >
             <Input />
           </Form.Item>
@@ -53,7 +54,7 @@ const AddCourseModal = ({ onAdd }) => {
             name="desc"
             required
             label="Description"
-            rules={[{ required: true, message: 'Please enter desription' }]}
+            rules={[{ required: true, message: "Please enter desription" }]}
           >
             <Input.TextArea />
           </Form.Item>

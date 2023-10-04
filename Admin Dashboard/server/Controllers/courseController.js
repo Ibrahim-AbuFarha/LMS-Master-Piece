@@ -2,6 +2,7 @@ const Course = require('./../Models/courseModel');
 const Teacher = require('./../Models/teacherModel');
 const ApiFeatures = require('./../utils/ApiFeatures');
 
+//get all courses with filter and pagination
 exports.getAllCourses = async (req, res) => {
   try {
     const features = new ApiFeatures(Course, req.query).filter();
@@ -21,15 +22,14 @@ exports.getAllCourses = async (req, res) => {
     });
   }
 };
-
+//get course and populate with section and teacher id
 exports.getCourse = async (req, res) => {
   console.log('1');
   const course = await Course.findById(req.params.id)
     .populate('sections')
+    //for mobile application to show the teacher
     .populate('teacherId')
-
-    .exec(); //shorthand for having to write this
-  //course.findOne({_id:req.params.id})
+    .exec();
   console.log(course);
   if (!course) {
     throw new Error('No course found with that ID', 404);
@@ -40,15 +40,17 @@ exports.getCourse = async (req, res) => {
     course,
   });
 };
-
+//create new Course
 exports.createCourse = async (req, res) => {
   try {
     const { id: teacherId } = req.user;
     const teacher = await Teacher.find({ teacherId });
+
+    //check if teacher is exist
     if (!teacher) throw new Error('classRoom is not exist');
     const course = await Course.create({ ...req.body, teacherId });
 
-    //check if there is classRoom and student
+    //check if there is course is exist
     if (!course) throw new Error('classRoom is not exist');
     res.status(201).json({
       state: 'success',
@@ -61,6 +63,7 @@ exports.createCourse = async (req, res) => {
     });
   }
 };
+//delete course
 exports.deleteCourse = async (req, res) => {
   try {
     const { id } = req.params;
@@ -78,7 +81,7 @@ exports.deleteCourse = async (req, res) => {
     });
   }
 };
-
+//update course
 exports.updateCourse = async (req, res) => {
   try {
     const { id } = req.params;

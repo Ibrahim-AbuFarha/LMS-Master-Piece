@@ -8,19 +8,20 @@ const AddLessonModal = ({ onAdd, sectionId }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [file, setFile] = useState();
   const [form] = useForm();
-
+//show add lesson modal
   const showModal = () => {
     setOpen(true);
   };
-
+//hide add lesson modal
   const handleCancel = () => {
     setOpen(false);
   };
-
+//add new Lesson
   const handleOk = async () => {
     setConfirmLoading(true);
     try {
       const { name } = await form.validateFields();
+      //upload the video using fireBase it will return a url
       const url = await uploadFile(file);
       await onAdd(name, url, sectionId);
       setOpen(false);

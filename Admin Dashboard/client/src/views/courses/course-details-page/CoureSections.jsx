@@ -3,24 +3,25 @@ import AddLessonModal from "./AddLessonModal";
 import AddSectionModal from "./AddSectionModal";
 import LessonsList from "./LessonsList";
 import { useEffect, useState } from "react";
-import axios from "axios";
+
 import { useParams } from "react-router-dom";
+import { LMS_API } from "../../../../api/api";
 
 const CoureSections = () => {
   const { id: courseId } = useParams();
 
   const [sections, setSections] = useState([]);
+
+  //get sections for the courseId
   const getSections = async () => {
-    const { data } = await axios.get(
-      `http://127.0.0.1:8000/api/v1/sections?courseId=${courseId}`
-    );
+    const { data } = await LMS_API.get(`/sections?courseId=${courseId}`);
     console.log(data);
     setSections(data.sections);
   };
   useEffect(() => {
     getSections();
   }, []);
-
+  //mapping for show the section lessons
   const initSections = sections.map((section) => ({
     key: section._id,
     label: section.title,
@@ -35,18 +36,16 @@ const CoureSections = () => {
       </div>
     ),
   }));
-
+  //add lesson
   async function handleAddLesson(title, url, sectionId) {
     try {
-      const { data } = await axios.post(
-        "http://127.0.0.1:8000/api/v1/sections/addLesson",
-        {
-          title,
-          url,
-          sectionId,
-        }
-      );
+      const { data } = await LMS_API.post("/sections/addLesson", {
+        title,
+        url,
+        sectionId,
+      });
       console.log(data);
+      //to avoid the manipulation
       const sectionIndex = sections.findIndex((item) => item._id === sectionId);
 
       setSections((prev) => {
@@ -58,14 +57,15 @@ const CoureSections = () => {
       console.log(error.response.message);
     }
   }
-
+  //delete lesson
   async function handleDeleteLesson(lessonId, sectionId) {
     try {
       console.log(lessonId, sectionId);
-      const { data } = await axios.delete(
-        `http://127.0.0.1:8000/api/v1/sections/${sectionId}/deleteLesson/${lessonId}`
+      const { data } = await LMS_API.delete(
+        `/sections/${sectionId}/deleteLesson/${lessonId}`
       );
       console.log(data);
+      //to avoid the manipulation
       const sectionIndex = sections.findIndex((item) => item._id === sectionId);
       console.log(sectionIndex);
       setSections((prev) => {
@@ -77,16 +77,13 @@ const CoureSections = () => {
       console.log(error.response.message);
     }
   }
-
+  //add new Section
   async function handleAddSection(section) {
     try {
-      const { data } = await axios.post(
-        "http://127.0.0.1:8000/api/v1/sections",
-        {
-          ...section,
-          courseId,
-        }
-      );
+      const { data } = await LMS_API.post("/sections", {
+        ...section,
+        courseId,
+      });
       console.log(data.section);
       setSections([...sections, data.section]);
     } catch (error) {

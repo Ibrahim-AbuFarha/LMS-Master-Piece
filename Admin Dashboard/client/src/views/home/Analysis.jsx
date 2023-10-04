@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import SchoolCalendar from "./SchoolCalender";
 
-import axios from "axios";
 import AnalysisRow from "./AnalysisRow";
 
 import ClassStudentChart from "./ClassStudentChart";
@@ -10,8 +9,6 @@ import { LMS_API } from "../../../api/api";
 import { Row, Col, Card } from "antd";
 import LastStudentsAdded from "./LastStudentsAdded";
 
-import AuthContext from "../../store/authContext";
-
 function Analysis() {
   const [analysis, SetAnalysis] = useState([]);
   const [lastStudents, setLastStudents] = useState([]);
@@ -19,16 +16,16 @@ function Analysis() {
   const [loading, setLoading] = useState(false);
 
   const [teacherClasses, setTeacherClasses] = useState([]);
-
-  const getNumberResources = async () =>
-    await axios.get("http://127.0.0.1:8000/api/v1/analysis");
-
+  // get the resources number "teachers,classRooms,students,courses"
+  const getNumberResources = async () => await LMS_API.get("/analysis");
+  //get teacher added in specific month
   const getTeacherByMonth = async () =>
-    LMS_API.get("/analysis/getTeacherDataByMonth");
-
-  const getLastAddedStudent = async () => LMS_API.get(`/students?limit=5`);
-
-  const getAllClasses = async () => LMS_API.get(`classRooms`);
+    await LMS_API.get("/analysis/getTeacherDataByMonth");
+  //get last 5 students added
+  const getLastAddedStudent = async () =>
+    await LMS_API.get(`/students?limit=5`);
+  //get all classes
+  const getAllClasses = async () => await LMS_API.get(`classRooms`);
 
   useEffect(() => {
     setLoading(true);
@@ -40,6 +37,7 @@ function Analysis() {
       getAllClasses(),
     ])
       .then((res) => {
+        //edit the shape of the data
         const { data: resoursesRes } = res[0];
         const { data: teacherRes } = res[1];
         const { data: lastStudentRes } = res[2];
@@ -88,13 +86,3 @@ function Analysis() {
 }
 
 export default Analysis;
-
-//   <div>
-//
-//   </div>
-//   <div>
-//     <SchoolCalendar />
-//   </div>
-//   <div>{<TeacherChart></TeacherChart>}</div>
-//   <div>1</div>
-//   {/* <StudentChart></StudentChart> */}

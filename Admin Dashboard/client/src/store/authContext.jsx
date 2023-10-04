@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+
 import { LMS_API } from "../../api/api";
 const AuthContext = createContext();
 export default AuthContext;
@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isFirstMount, setIsFirstMount] = useState(true);
 
-  console.log(4);
+  console.log(23);
   const logIn = (user) => {
     console.log(user);
     setUser(user);
@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
       })
       .catch((err) => console.log(err));
   };
-
+  // if the page refresh when the user signed in we get the current user by this
   useEffect(() => {
     LMS_API.get("/teachers/currentTeacher")
       .then(({ data }) => {

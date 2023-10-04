@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Table, Button, Modal, message } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import axios from "axios";
+import { LMS_API } from "../../../api/api";
 const { Content } = Layout;
 const { confirm } = Modal;
 
 const AdminApprovalPage = () => {
   const [requests, setRequests] = useState([]);
+  //get all requests
   const getAllRequests = async () => {
     try {
-      const { data } = await axios.get(
-        `http://127.0.0.1:8000/api/v1/teachers?status=pending`
-      );
+      const { data } = await LMS_API.get(`/teachers?status=pending`);
       console.log(data);
       setRequests(data.teachers);
     } catch (error) {
@@ -22,21 +21,18 @@ const AdminApprovalPage = () => {
   useEffect(() => {
     getAllRequests();
   }, []);
-
+  //Approve request
   const handleApproval = async (id) => {
-    await axios.patch(
-      `http://127.0.0.1:8000/api/v1/teachers/updateRequest/${id}`
-    );
+    await LMS_API.patch(`/teachers/updateRequest/${id}`);
     const updatedDataSource = requests.filter((item) => item._id !== id);
     setRequests(updatedDataSource);
     message.success("teacher has added");
   };
+  //Decline request
   const handleDeclined = async (id) => {
     try {
       console.log(id);
-      await axios.delete(
-        `http://127.0.0.1:8000/api/v1/teachers/updateRequest/${id}`
-      );
+      await LMS_API.delete(`/teachers/updateRequest/${id}`);
       const updatedDataSource = requests.filter((item) => item._id !== id);
       setRequests(updatedDataSource);
       message.success("teacher has declined");
@@ -89,7 +85,7 @@ const AdminApprovalPage = () => {
       ),
     },
   ];
-
+  //approval form
   const showApproveConfirm = (key) => {
     confirm({
       title: "Do you want to approve this request?",
@@ -100,7 +96,7 @@ const AdminApprovalPage = () => {
       onCancel() {},
     });
   };
-
+  //decline form
   const showDeclineConfirm = (key) => {
     confirm({
       title: "Do you want to decline this request?",

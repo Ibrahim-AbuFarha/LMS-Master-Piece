@@ -1,30 +1,30 @@
-import React from 'react';
-import { Alert, Input, Button, Form, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import './LoginForm.css'; // Import your CSS file for styling
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useContext } from 'react';
-import AuthContext from '../../store/authContext';
+import React from "react";
+import { Alert, Input, Button, Form, message } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import "./LoginForm.css";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../store/authContext";
+import { LMS_API } from "../../../api/api";
 const LoginForm = () => {
   const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  //sing in user
   const signIn = async (values) => {
     try {
-      const { data } = await axios.post(
-        'http://127.0.0.1:8000/api/v1/teachers/signInTeacher',
-        values,
-        { withCredentials: true }
-      );
+      const { data } = await LMS_API.post("teachers/signInTeacher", values, {
+        withCredentials: true,
+      });
 
       console.log(data);
+      //set the user info in state
       logIn(data.teacher);
-      navigate('/');
+
+      navigate("/");
     } catch (error) {
       console.log(error);
-      message.error('email or password is not correct ');
+      message.error("email or password is not correct ");
     }
   };
   const onFinish = (values) => {
@@ -43,8 +43,8 @@ const LoginForm = () => {
             rules={[
               {
                 required: true,
-                message: 'Please enter a valid  Email!',
-                type: 'email',
+                message: "Please enter a valid  Email!",
+                type: "email",
               },
             ]}
           >
@@ -56,7 +56,7 @@ const LoginForm = () => {
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: 'Please enter your password!' }]}
+            rules={[{ required: true, message: "Please enter your password!" }]}
           >
             <Input.Password
               prefix={<LockOutlined />}

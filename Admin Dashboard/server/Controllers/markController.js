@@ -1,9 +1,13 @@
 const Mark = require('../Models/markModel');
 const ClassRoom = require('../Models/classRoomModel');
 const Student = require('../Models/studentModel');
+
+//get all marks
 exports.getAllMarks = async (req, res) => {
   try {
     const marks = await Mark.find({});
+    //check if marks is exist
+
     if (!marks) throw new Error('mark  is not exist');
 
     res.status(200).json({
@@ -17,9 +21,11 @@ exports.getAllMarks = async (req, res) => {
     });
   }
 };
+//get mark
 exports.getMark = async (req, res, next) => {
-  const mark = await Mark.findById(req.params.id); //shorthand for having to write this
-  //mark.findOne({_id:req.params.id})
+  const mark = await Mark.findById(req.params.id);
+  //check if mark is exist
+
   if (!mark) throw new Error('mark  is not exist');
 
   res.status(200).json({
@@ -29,6 +35,7 @@ exports.getMark = async (req, res, next) => {
     },
   });
 };
+//create mark
 exports.createMark = async (req, res) => {
   try {
     const { classId, studentId } = req.body;
@@ -51,10 +58,13 @@ exports.createMark = async (req, res) => {
     });
   }
 };
+//delete mark
 exports.deleteMark = async (req, res) => {
   try {
     const { id } = req.params;
     const mark = await Mark.findByIdAndDelete(id);
+    //check if classRoom is exist
+
     if (!mark) throw new Error('mark  is not exist');
 
     res.status(200).json({
@@ -67,12 +77,15 @@ exports.deleteMark = async (req, res) => {
     });
   }
 };
+//update mark
 exports.updateMark = async (req, res) => {
   try {
     const { id } = req.params;
     const mark = await Mark.findByIdAndUpdate(id, req.body, {
       new: true,
     });
+    //check if mark is exist
+
     if (!mark) throw new Error('mark  is not exist');
 
     res.status(200).json({

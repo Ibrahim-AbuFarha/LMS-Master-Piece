@@ -5,7 +5,9 @@ const LessonsList = ({ lessons, onDelete, sectionId }) => {
     <div className="flex-col" style={{ marginBottom: "10px" }}>
       {lessons.map((lesson) => (
         <div key={lesson._id} className="flex">
-          <a href={lesson.url}>{lesson.title}</a>
+          <a href={lesson.url} target="_blank">
+            {lesson.title}
+          </a>
 
           <DeleteModal
             text={"Are u sure you want to delete this lesson ?"}
@@ -19,8 +21,3 @@ const LessonsList = ({ lessons, onDelete, sectionId }) => {
 };
 
 export default LessonsList;
-
-
-
-
-

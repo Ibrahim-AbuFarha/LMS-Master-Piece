@@ -4,6 +4,7 @@ const ClassRoom = require('../Models/classRoomModel');
 const Course = require('../Models/courseModel');
 const { getMonthName } = require('../utils/helper');
 
+//get number of resources "teacher,students,classRooms,courses"
 exports.numberOfResources = async (req, res) => {
   try {
     const numTeachers = await Teacher.find({}).countDocuments();

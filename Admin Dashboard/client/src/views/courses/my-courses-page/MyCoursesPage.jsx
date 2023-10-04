@@ -1,6 +1,6 @@
-import { Typography, Button } from 'antd';
-import { Link } from 'react-router-dom';
-import CourseList from './CourseList';
+import { Typography, Button } from "antd";
+
+import CourseList from "./CourseList";
 
 const MyCoursesPage = () => {
   return (

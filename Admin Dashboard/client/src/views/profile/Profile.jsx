@@ -18,7 +18,6 @@ import {
   PhoneOutlined,
   SaveOutlined,
   CalendarOutlined,
-  BookOutlined,
 } from "@ant-design/icons";
 import AuthContext from "../../store/authContext";
 import { useContext } from "react";
@@ -32,14 +31,14 @@ const AdminProfilePage = () => {
   const [img, setImg] = useState(null);
 
   console.log(user);
-
+  //convert the img file into url using firebase and upload the image
   const onFinish = async (values) => {
     let imageUrl;
     if (img) {
       imageUrl = await uploadFile(img);
       values.img = imageUrl;
     }
-
+    //edit the user info
     try {
       const { data } = await axios.patch(
         `http://127.0.0.1:8000/api/v1/teachers/${user._id}`,
@@ -58,7 +57,7 @@ const AdminProfilePage = () => {
       console.log(error.response.data.message);
     }
   };
-
+  //to change the img url
   const handleImgChange = (newImg) => {
     setImg(newImg);
     return false;

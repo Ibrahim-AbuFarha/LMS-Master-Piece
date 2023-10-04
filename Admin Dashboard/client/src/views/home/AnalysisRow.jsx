@@ -1,11 +1,11 @@
-import { HomeOutlined, ReadOutlined, UserOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Space, Statistic, Typography } from 'antd';
+import { HomeOutlined, ReadOutlined, UserOutlined } from "@ant-design/icons";
+import { Card, Col, Row, Space, Statistic, Typography } from "antd";
 
 function AnalysisRow({ analysis }) {
   //
 
   return (
-    <div style={{ marginBottom: '40px' }}>
+    <div style={{ marginBottom: "40px" }}>
       <Typography.Title style={{ marginBottom: 20 }} level={4}>
         Dashboard
       </Typography.Title>
@@ -15,34 +15,34 @@ function AnalysisRow({ analysis }) {
             icon={
               <HomeOutlined
                 style={{
-                  color: 'green',
-                  backgroundColor: 'rgba(0,255,0,0.25)',
+                  color: "green",
+                  backgroundColor: "rgba(0,255,0,0.25)",
                   borderRadius: 20,
                   fontSize: 24,
                   padding: 8,
                 }}
               />
             }
-            title={'ClassRooms'}
+            title={"ClassRooms"}
             value={analysis.numClassRooms}
           />
         </Col>
 
         <Col span={6}>
-          {' '}
+          {" "}
           <DashboardCard
             icon={
               <UserOutlined
                 style={{
-                  color: 'blue',
-                  backgroundColor: 'rgba(0,0,255,0.25)',
+                  color: "blue",
+                  backgroundColor: "rgba(0,0,255,0.25)",
                   borderRadius: 20,
                   fontSize: 24,
                   padding: 8,
                 }}
               />
             }
-            title={'Teachers'}
+            title={"Teachers"}
             value={analysis.numTeachers}
           />
         </Col>
@@ -51,15 +51,15 @@ function AnalysisRow({ analysis }) {
             icon={
               <UserOutlined
                 style={{
-                  color: 'purple',
-                  backgroundColor: 'rgba(0,255,255,0.25)',
+                  color: "purple",
+                  backgroundColor: "rgba(0,255,255,0.25)",
                   borderRadius: 20,
                   fontSize: 24,
                   padding: 8,
                 }}
               />
             }
-            title={'Students'}
+            title={"Students"}
             value={analysis.numStudents}
           />
         </Col>
@@ -68,15 +68,15 @@ function AnalysisRow({ analysis }) {
             icon={
               <ReadOutlined
                 style={{
-                  color: 'red',
-                  backgroundColor: 'rgba(255,0,0,0.25)',
+                  color: "red",
+                  backgroundColor: "rgba(255,0,0,0.25)",
                   borderRadius: 20,
                   fontSize: 24,
                   padding: 8,
                 }}
               />
             }
-            title={'Courses'}
+            title={"Courses"}
             value={analysis.numCourses}
           />
         </Col>

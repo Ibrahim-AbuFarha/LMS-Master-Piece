@@ -1,5 +1,7 @@
 const Teacher = require('./../Models/teacherModel');
 const ApiFeatures = require('./../utils/ApiFeatures');
+
+//get all teacher with pagination and filter
 exports.getAllTeachers = async (req, res) => {
   try {
     const features = new ApiFeatures(Teacher, req.query).filter();
@@ -19,7 +21,7 @@ exports.getAllTeachers = async (req, res) => {
     });
   }
 };
-
+//get teacher
 exports.getTeacher = async (req, res, next) => {
   try {
     const teacher = await Teacher.findById(req.params.id); //shorthand for having to write this
@@ -40,14 +42,12 @@ exports.getTeacher = async (req, res, next) => {
     });
   }
 };
-
+//delete teacher
 exports.deleteTeacher = async (req, res) => {
   try {
     const { id } = req.params;
     const teacher = await Teacher.findByIdAndDelete(id);
-    // if (!teacher) {
-    //   //   return next(new AppError('No Teacher found with that ID', 404));
-    // }
+    if (!teacher) throw new Error('teacher is not found with this id');
     res.status(200).json({
       state: 'success',
     });
@@ -58,6 +58,7 @@ exports.deleteTeacher = async (req, res) => {
     });
   }
 };
+//update teacher info
 exports.updateTeacher = async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,6 +77,7 @@ exports.updateTeacher = async (req, res) => {
     });
   }
 };
+//create teacher by admin
 exports.createTeacher = async (req, res) => {
   try {
     const teacher = await Teacher.create({ ...req.body, status: 'approved' });
@@ -90,7 +92,7 @@ exports.createTeacher = async (req, res) => {
     });
   }
 };
-
+//approve request
 exports.approveRequest = async (req, res) => {
   try {
     const { id } = req.params;
@@ -114,7 +116,7 @@ exports.approveRequest = async (req, res) => {
     });
   }
 };
-
+//delete request
 exports.deleteRequest = async (req, res) => {
   try {
     const { id } = req.params;
@@ -132,7 +134,7 @@ exports.deleteRequest = async (req, res) => {
     });
   }
 };
-
+//get current teacher
 exports.getCurrentTeacher = async (req, res) => {
   const { user } = req;
 

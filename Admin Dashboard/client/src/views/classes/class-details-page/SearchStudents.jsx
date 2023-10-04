@@ -1,10 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Card, Input } from "antd";
 import { LMS_API } from "../../../../api/api";
 const SearchStudents = ({ onSelect, selectedStudent }) => {
   const [students, setStudents] = useState([]);
   console.log(students);
+  //this function occur when the input changes to get all student names while searching
   const handleChangeName = async (e) => {
     console.log(e.target.value);
     const { data } = await LMS_API.get(
