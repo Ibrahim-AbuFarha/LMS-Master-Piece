@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Modal, Form, Input, message } from "antd";
 
 import { useForm } from "antd/es/form/Form";
 
@@ -17,9 +17,10 @@ const AddCourseModal = ({ onAdd, userId }) => {
   };
   // to add the new Course
   const handleOk = async () => {
+    setConfirmLoading(true);
     try {
       const value = await form.validateFields();
-      setConfirmLoading(true);
+      console.log(value);
       await onAdd({ ...value, teacherId: userId });
       setOpen(false);
       message.success("course has added");

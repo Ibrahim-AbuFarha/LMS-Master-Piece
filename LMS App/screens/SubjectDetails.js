@@ -35,7 +35,7 @@ export default function SubjectDetails() {
   }, []);
 
   if (!course) return;
-
+  console.log(course.teacherId.img);
   const renderSections = () => {
     return course.sections.map((item, index) => (
       <View key={item._id} className="flex flex-row  justify-around">
@@ -45,7 +45,8 @@ export default function SubjectDetails() {
         <Text className="text-lg text-gray-400">
           ({item.lessons.length} materials)
         </Text>
-        <TouchableOpacity className="ml-5"
+        <TouchableOpacity
+          className="ml-5"
           onPress={() =>
             navigation.navigate("CourseDetails", {
               sectionId: item._id,
@@ -98,7 +99,6 @@ export default function SubjectDetails() {
       <View>
         <Text className="text-2xl p-5">Teachers</Text>
         <View className="flex flex-row items-center gap-4 px-4 mb-4">
-          <Image source={require("../assets/images/home/Math.png")} />
           <View>
             <Text className="text-2xl">{course.teacherId.fullName}</Text>
             <Text className="text-gray-400 text-xl">
